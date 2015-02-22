@@ -14,7 +14,7 @@ namespace Хваст
         public static Graphics g;
         public static Bitmap bmp;
         public static Random rnd = new Random();
-        public static int cl_r = 0, cl_g = 0, cl_b = 0;
+        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = -1;
         public static bool CanDClick = true;
         public static Int64 count = 0;
         public static float width = 40, _width = width;
@@ -46,6 +46,9 @@ namespace Хваст
         {
             if (win & !lose & game)
             {
+
+                score++;
+                label3.Text = "ВАШ СЧЕТ: " + Convert.ToString(score);
                 win = false;
                 game = true;
                 g.Clear(Color.White);
@@ -62,7 +65,7 @@ namespace Хваст
                 g.FillEllipse(Brushes.Yellow, point2.X - 20, point2.Y - 20, _width, _width);
                 pictureBox1.Image = bmp;
                 if (width >= 6)
-                    width--;
+                    width-=3;
             }
         }
 
@@ -98,17 +101,17 @@ namespace Хваст
                     Color color1;
                     Point r = this.PointToClient(point1);
                     color1 = bmp.GetPixel(r.X, r.Y);
-                    label1.Text = color1.Name;
                     if(color1.Name == "ffffff00" & game)
                     {
                         win = true;
-                        label2.Text = "WIN";
+                        label2.Text = "ИДЕТ ИГРА";
                     }
                     if (color1.Name == "ffffffff")
                     {
                         win = false;
                         game = false;
-                        label2.Text = "GAME OVER";
+                        label2.Text = "ВЫ ПРОИГРАЛИ";
+                        MessageBox.Show("Вы проиграли! Ваш счёт: " + Convert.ToString(score));
                     }
                 }
             }
@@ -130,6 +133,21 @@ namespace Хваст
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("Для начала игры, сделайте двойной щелчок примерно в центре игрового поля. Вы должны провести указатель мыши от красной точки до желтой, не выходя за границы линии, иначе игра будет закончена. За каждое достижение желтой точки вам начисляется очко. По мере прохождения толщина линии будет уменьшатся.");
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
         {
 
         }
