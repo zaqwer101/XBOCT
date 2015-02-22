@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace Хваст
 {
     public partial class Form1 : Form
@@ -14,7 +15,7 @@ namespace Хваст
         public static Graphics g;
         public static Bitmap bmp;
         public static Random rnd = new Random();
-        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = -1;
+        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = -1, dif = 40;
         public static bool CanDClick = true;
         public static Int64 count = 0;
         public static float width = 40, _width = width;
@@ -22,8 +23,9 @@ namespace Хваст
 
         public Form1()
         {
+            //button2.Visible = false;
             InitializeComponent();
-            timer1.Interval = 1000;
+            timer1.Interval = 100;
         }
         public Point point1;
         private void Form1_Load(object sender, EventArgs e)
@@ -46,8 +48,8 @@ namespace Хваст
         {
             if (win & !lose & game)
             {
-
-                score++;
+                label1.Text = "СЛОЖНОСТЬ: " + Convert.ToString(dif - 40);
+                dif++;
                 label3.Text = "ВАШ СЧЕТ: " + Convert.ToString(score);
                 win = false;
                 game = true;
@@ -61,11 +63,12 @@ namespace Хваст
                 Pen p = new Pen(color, width);
                 Point point2 = new Point((rnd.Next(600)), (rnd.Next(600)));
                 g.DrawLine(p, point1, point2);
+                score += Convert.ToInt32(Math.Sqrt(Math.Pow(point2.X - point1.X, 2) + Math.Pow(point2.Y - point1.Y, 2)));
                 point1 = point2;
                 g.FillEllipse(Brushes.Yellow, point2.X - 20, point2.Y - 20, _width, _width);
                 pictureBox1.Image = bmp;
-                if (width >= 6)
-                    width-=3;
+                if (width >= 8)
+                    width--;
             }
         }
 
@@ -112,6 +115,8 @@ namespace Хваст
                         game = false;
                         label2.Text = "ВЫ ПРОИГРАЛИ";
                         MessageBox.Show("Вы проиграли! Ваш счёт: " + Convert.ToString(score));
+                        timer1.Stop();
+                        button2.Visible = true;
                     }
                 }
             }
@@ -148,6 +153,16 @@ namespace Хваст
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }
