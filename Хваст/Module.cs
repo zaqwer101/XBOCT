@@ -8,7 +8,6 @@ namespace Хваст
 {
     class Module
     {
-        public static Color mouse_color;
         public static Graphics g;
         public static Bitmap bmp;
         public static Random rnd = new Random();
