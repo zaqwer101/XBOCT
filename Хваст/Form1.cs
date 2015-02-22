@@ -94,8 +94,9 @@ namespace Хваст
             {
                 if (InScreen)
                 {
+                    Point point1 = new Point(Cursor.Position.X - 10, Cursor.Position.Y - 12 );
                     Color color1;
-                    Point r = this.PointToClient(Cursor.Position);
+                    Point r = this.PointToClient(point1);
                     color1 = bmp.GetPixel(r.X, r.Y);
                     label1.Text = color1.Name;
                     if(color1.Name == "ffffff00" & game)
