@@ -15,7 +15,7 @@ namespace Хваст
         public static Graphics g;
         public static Bitmap bmp;
         public static Random rnd = new Random();
-        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = -1, dif = 40;
+        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = 0, dif = 40;
         public static bool CanDClick = true;
         public static Int64 count = 0;
         public static float width = 40, _width = width;
@@ -23,7 +23,6 @@ namespace Хваст
 
         public Form1()
         {
-            //button2.Visible = false;
             InitializeComponent();
             timer1.Interval = 100;
         }
@@ -33,7 +32,6 @@ namespace Хваст
             
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(bmp);
-            //gr = pictureBox1.CreateGraphics();
             pictureBox1.Image = bmp;
         }
 
@@ -62,8 +60,12 @@ namespace Хваст
                 g.FillEllipse(Brushes.Red, point1.X - 20, point1.Y - 20, _width, _width);
                 Pen p = new Pen(color, width);
                 Point point2 = new Point((rnd.Next(600)), (rnd.Next(600)));
+                while ((Math.Sqrt(Math.Pow(point2.X - point1.X, 2) + Math.Pow(point2.Y - point1.Y, 2)) <= 300))
+                {
+                    point2 = new Point((rnd.Next(600)), (rnd.Next(600)));
+                }
                 g.DrawLine(p, point1, point2);
-                score += Convert.ToInt32(Math.Sqrt(Math.Pow(point2.X - point1.X, 2) + Math.Pow(point2.Y - point1.Y, 2)));
+                score += (dif-40);
                 point1 = point2;
                 g.FillEllipse(Brushes.Yellow, point2.X - 20, point2.Y - 20, _width, _width);
                 pictureBox1.Image = bmp;
@@ -109,12 +111,12 @@ namespace Хваст
                         win = true;
                         label2.Text = "ИДЕТ ИГРА";
                     }
-                    if (color1.Name == "ffffffff")
+                    if (color1.Name == "ffffffff" & game)
                     {
                         win = false;
                         game = false;
                         label2.Text = "ВЫ ПРОИГРАЛИ";
-                        MessageBox.Show("Вы проиграли! Ваш счёт: " + Convert.ToString(score));
+                        MessageBox.Show("Вы проиграли! Ваш счёт: " + Convert.ToString(score - (dif-40)));
                         timer1.Stop();
                         button2.Visible = true;
                     }
@@ -168,32 +170,3 @@ namespace Хваст
         }
     }
 }
-
-/* 
-            game = true;
-            Module.g.Clear(Color.White);
-            pictureBox1.BackColor = Color.White;
-            cl_r = Module.rnd.Next(255);
-            cl_g = Module.rnd.Next(255);
-            cl_b = Module.rnd.Next(255);
-            Color color = Color.FromArgb(cl_r, cl_g, cl_b);
-            Module.g.FillEllipse(Brushes.Red, point1.X - 20, point1.Y - 20, width, width);
-            Pen p = new Pen(color, width);
-            Point point2 = new Point((Module.rnd.Next(600)), (Module.rnd.Next(600)));
-            Module.g.DrawLine(p, point1, point2);
-            point1 = point2;
-            Module.g.FillEllipse(Brushes.Yellow, point2.X - 20, point2.Y - 20, width, width);
-            pictureBox1.Image = Module.bmp;
-            if (width >= 6)
-                width--;
-
-  
-  
-  
-  
-  
- 
-                Color color1;
-                Point r = this.PointToClient(Cursor.Position);
-                color1 = Module.bmp.GetPixel(r.X, r.Y);
- */
