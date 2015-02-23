@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -15,11 +14,11 @@ namespace Хваст
         public static Graphics g;
         public static Bitmap bmp;
         public static Random rnd = new Random();
-        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = 0, dif = 40;
+        public static int cl_r = 0, cl_g = 0, cl_b = 0, score = 0, dif = 40, score1 = 0, score2 = 0, score3 = 0;
         public static bool CanDClick = true;
         public static Int64 count = 0;
         public static float width = 40, _width = width;
-
+        public static string username;
 
         public Form1()
         {
@@ -29,7 +28,6 @@ namespace Хваст
         public Point point1;
         private void Form1_Load(object sender, EventArgs e)
         {
-            
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(bmp);
             pictureBox1.Image = bmp;
@@ -69,7 +67,7 @@ namespace Хваст
                 point1 = point2;
                 g.FillEllipse(Brushes.Yellow, point2.X - 20, point2.Y - 20, _width, _width);
                 pictureBox1.Image = bmp;
-                if (width >= 8)
+                if (width >= 5)
                     width--;
             }
         }
@@ -111,12 +109,21 @@ namespace Хваст
                         win = true;
                         label2.Text = "ИДЕТ ИГРА";
                     }
-                    if (color1.Name == "ffffffff" & game)
+                    if (color1.Name == "ffffffff" & game)   // Поражение
                     {
+                        if (score > score1)
+                            score1 = score;
+                        else
+                            if (score > score2)
+                                score2 = score;
+                            else
+                                if (score > score3)
+                                    score3 = score;
                         win = false;
                         game = false;
                         label2.Text = "ВЫ ПРОИГРАЛИ";
                         MessageBox.Show("Вы проиграли! Ваш счёт: " + Convert.ToString(score - (dif-40)));
+                        
                         timer1.Stop();
                         button2.Visible = true;
                     }
